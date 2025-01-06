@@ -24,7 +24,7 @@ export const ParticipantsList: React.FC = () => {
       <header className="flex justify-between items-center">
         <h1 className="md:text-[40px] text-[30px] font-medium leading-[46.88px]">Participants</h1>
         <NavLink to="/participants/new">
-          <button className="md:px-10 px-5 py-3 bg-[#222222] text-white">Add new participant</button>
+          <button className="md:px-10 px-5 py-3 bg-[#222222] text-white">Add participant</button>
         </NavLink>
       </header>
       <ul className="w-full">

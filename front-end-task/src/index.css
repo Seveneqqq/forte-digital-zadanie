@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body {
+  color:#222222;
   margin: 0;
   font-family: 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
