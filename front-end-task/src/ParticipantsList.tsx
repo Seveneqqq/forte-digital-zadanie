@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 interface Participant {
   id: number;
   name: string;
-  // ...
+  email: string;
 }
 
 export const ParticipantsList: React.FC = () => {
@@ -20,13 +20,29 @@ export const ParticipantsList: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      {participants.map((participant) => (
-        <div key={participant.id}>
-          {participant.name}{" "}
-          <NavLink to={`/participants/${participant.id}`}>Edit</NavLink>
-        </div>
-      ))}
-    </div>
+    <section className="flex flex-col gap-10">
+      <header className="flex justify-between items-center">
+        <h1 className="md:text-[40px] text-[30px] font-medium leading-[46.88px]">Participants</h1>
+        <NavLink to="/participants/new">
+          <button className="md:px-10 px-5 py-3 bg-[#222222] text-white">Add new participant</button>
+        </NavLink>
+      </header>
+      <ul className="w-full">
+        {participants.map((participant) => (
+          <li key={participant.id} className="flex flex-row items-center justify-between py-2 px-6 h-16 bg-[#EDEDED] even:bg-[#F2F2F2]">
+            <div className="flex gap-4">
+              <span className="font-normal">{participant.name}</span>
+              <span className="font-medium">({participant.email})</span>
+            </div>
+            <NavLink to={`/participants/${participant.id}`} className="flex gap-2 font-bold justify-center items-center"><img src="/img/icons/edit.svg" />Edit</NavLink>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 };
+
+// <div key={participant.id}>
+//             {participant.name}{" "}({participant.email}){" "}
+//             
+//           </div>
