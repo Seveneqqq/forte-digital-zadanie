@@ -41,8 +41,3 @@ export const ParticipantsList: React.FC = () => {
     </section>
   );
 };
-
-// <div key={participant.id}>
-//             {participant.name}{" "}({participant.email}){" "}
-//             
-//           </div>
