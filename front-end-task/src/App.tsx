@@ -9,13 +9,15 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App p-10 flex flex-col gap-10">
-        <img src="/img/logo.svg" className="w-20 h-20" alt="Logo Forte Digital"></img>
-        <div className="bg-[#F7F7F7] px-[68px] pt-[40px] pb-[80px] w-fit self-center">
+        <header>
+          <img src="/img/logo.svg" className="w-20 h-20" alt="Logo Forte Digital" />
+        </header>
+        <main className="bg-[#F7F7F7] md:w-[800px] w-full md:h-[528px] h-fit px-[68px] pt-[40px] pb-[80px] self-center">
           <Routes>
             <Route path="/" element={<ParticipantsList />} />
             <Route path="/participants/:id" element={<EditParticipant />} />
           </Routes>
-        </div>
+        </main>
       </div>
     </BrowserRouter>
   );
