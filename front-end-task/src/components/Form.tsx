@@ -1,61 +1,133 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface UserData {
-    fullName?: string;
-    emailAddress?: string;
+    name?: string;
+    email?: string;
     workStart?: Date;
     workEnd?: Date;
 }
 
+interface FormState {
+    name: string;
+    email: string;
+    workStart: string;
+    workEnd: string;
+}
+
 export const Form: React.FC<UserData> = ({
-    fullName = "",
-    emailAddress = "",
-    workStart,
-    workEnd,
+    name = "",
+    email = "",
+    workStart = undefined,
+    workEnd = undefined
 }) => {
-    
-    const formatDate = (date?: Date) => {
+
+    const { id } = useParams();
+
+    const [formState, setFormState] = useState<FormState>({
+        name: name,
+        email: email,
+        workStart: formatDate(workStart),
+        workEnd: formatDate(workEnd)
+    });
+
+    useEffect(() => {
+        setFormState({
+            name: name,
+            email: email,
+            workStart: formatDate(workStart),
+            workEnd: formatDate(workEnd)
+        });
+    }, [name, email, workStart, workEnd]);
+
+    function formatDate(date?: Date) {
         if (!date) return "";
         return new Date(date).toISOString().split('T')[0];
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormState(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+
+        e.preventDefault();
+        console.log(formState);
+        
+        try {
+            const response = await fetch(`http://localhost:3001/participants/${id}`,{
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formState)
+            })
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            console.log('Participant updated successfully');
+
+        } catch (error) {
+            console.log('Something goes wrong:' +error);
+        }
     };
 
     return (
-        <form className="w-full flex flex-col gap-10">
+        <form className="w-full flex flex-col gap-10" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2 items-start">
                 <label className="block text-sm font-medium text-gray-700">Full name *</label>
-                <input 
-                    type="text" 
-                    className="w-full px-3 py-2 border-[#222222] bg-transparent border-2 focus:outline-none focus:ring-blue-500" 
-                    value={fullName}
+                <input
+                    type="text"
+                    name="name"
+                    className="w-full px-3 py-2 border-2 border-gray-900 bg-transparent focus:outline-none focus:ring-blue-500"
+                    value={formState.name}
+                    onChange={handleChange}
                 />
             </div>
+
             <div className="flex flex-col gap-2 items-start">
                 <label className="block text-sm font-medium text-gray-700">Email address *</label>
-                <input 
-                    type="text" 
-                    className="w-full px-3 py-2 border-[#222222] bg-transparent border-[1px] focus:outline-none focus:ring-blue-500" 
-                    value={emailAddress} 
+                <input
+                    type="email"
+                    name="email"
+                    className="w-full px-3 py-2 border border-gray-900 bg-transparent focus:outline-none focus:ring-blue-500"
+                    value={formState.email}
+                    onChange={handleChange}
                 />
             </div>
+
             <div className="flex gap-4 w-full">
                 <div className="flex flex-col items-start w-full">
                     <label className="block text-sm font-medium text-gray-700">Work start</label>
-                    <input 
-                        type="date" 
-                        className="w-full px-3 py-2 border-[#222222] bg-transparent border-[1px] focus:outline-none focus:ring-blue-500" 
-                        value={formatDate(workStart)}
+                    <input
+                        type="date"
+                        name="workStart"
+                        className="w-full px-3 py-2 border border-gray-900 bg-transparent focus:outline-none focus:ring-blue-500"
+                        value={formState.workStart}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-start w-full">
                     <label className="block text-sm font-medium text-gray-700">Work end</label>
-                    <input 
-                        type="date" 
-                        className="w-full px-3 py-2 border-[#222222] bg-transparent border-[1px] focus:outline-none focus:ring-blue-500" 
-                        value={formatDate(workEnd)}
+                    <input
+                        type="date"
+                        name="workEnd"
+                        className="w-full px-3 py-2 border border-gray-900 bg-transparent focus:outline-none focus:ring-blue-500"
+                        value={formState.workEnd}
+                        onChange={handleChange}
                     />
                 </div>
             </div>
-            <button className="px-10 py-3 w-[224px] bg-[#222222] text-white">Submit</button>
+
+            <button type="submit" className="px-10 py-3 w-56 bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+                Submit
+            </button>
         </form>
     );
 };

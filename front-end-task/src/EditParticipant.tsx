@@ -35,7 +35,7 @@ export const EditParticipant: React.FC = () => {
                 <button className="flex gap-2 py-3 justify-center items-center font-medium"><img src="/img/icons/back-arrow.svg"/>Back to list</button>
               </NavLink>
             </header>
-            <Form fullName = {participant?.name} emailAddress = {participant?.email} workStart={participant?.workStart} workEnd={participant?.workEnd}/>
+            <Form name = {participant?.name} email = {participant?.email} workStart={participant?.workStart} workEnd={participant?.workEnd}/>
         </section>
       </main>
   );
