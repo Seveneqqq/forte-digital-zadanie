@@ -53,7 +53,40 @@ export const Form: React.FC<UserData> = ({
         }));
     };
 
+    const validateRequiredFields = () => {
+        return (
+            formState.name.trim() !== '' && 
+            formState.email.trim() !== '' && 
+            formState.workStart.trim() !== '' && 
+            formState.workEnd.trim() !== ''
+        );
+    };
+
+    const validateEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(formState.email);
+    };
+
+    const validateDates = () => {
+        const start = new Date(formState.workStart);
+        const end = new Date(formState.workEnd);
+        return start <= end;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
+
+        if(!validateRequiredFields()){
+            alert('Please fill in all required fields');
+            return;
+        }
+        if(!validateEmail()){
+            alert('Invalid email address');
+            return;
+        }
+        if(!validateDates()){
+            alert('Start date must be before end date');
+            return;
+        }
 
         e.preventDefault();
         console.log(formState);
@@ -74,6 +107,7 @@ export const Form: React.FC<UserData> = ({
             console.log('Participant updated successfully');
 
         } catch (error) {
+            alert('Error updating participant');
             console.log('Something goes wrong:' +error);
         }
     };
