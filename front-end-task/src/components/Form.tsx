@@ -6,6 +6,7 @@ interface UserData {
     email?: string;
     workStart?: Date;
     workEnd?: Date;
+    newParticipant?: boolean;
 }
 
 interface FormState {
@@ -19,7 +20,8 @@ export const Form: React.FC<UserData> = ({
     name = "",
     email = "",
     workStart = undefined,
-    workEnd = undefined
+    workEnd = undefined,
+    newParticipant = false
 }) => {
 
     const { id } = useParams();
@@ -91,21 +93,42 @@ export const Form: React.FC<UserData> = ({
         e.preventDefault();
         console.log(formState);
         
+        
         try {
-            const response = await fetch(`http://localhost:3001/participants/${id}`,{
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formState)
-            })
-    
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if(!newParticipant){
+
+                const response = await fetch(`http://localhost:3001/participants/${id}`,{
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formState)
+                })
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                console.log('Participant updated successfully');
+                alert('Participant updated successfully');
             }
+            else{
+                const response = await fetch(`http://localhost:3001/participants`,{
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formState)
+                })
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-            console.log('Participant updated successfully');
+                console.log('Participant created successfully');
+                alert('Participant created successfully');
 
+            }
         } catch (error) {
             alert('Error updating participant');
             console.log('Something goes wrong:' +error);

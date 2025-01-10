@@ -12,7 +12,7 @@ export const AddParticipant: React.FC = () => {
               <button className="flex gap-2 py-3 justify-center items-center font-medium"><img src="/img/icons/back-arrow.svg"/>Back to list</button>
             </NavLink>
           </header>
-          <Form />
+          <Form newParticipant={true} />
       </section>
     </main>
   );
