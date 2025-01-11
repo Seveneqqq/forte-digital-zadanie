@@ -8,7 +8,7 @@ import { AddParticipant } from "./AddParticipant";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App p-10 flex flex-col gap-10">
+      <div className="App md:p-10 p-5 flex flex-col md:gap-10 gap-5">
         <header>
           <img src="/img/logo.svg" className="w-20 h-20" alt="Logo Forte Digital" />
         </header>
