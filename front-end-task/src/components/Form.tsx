@@ -77,6 +77,8 @@ export const Form: React.FC<UserData> = ({
 
     const handleSubmit = async (e: React.FormEvent) => {
 
+        e.preventDefault();
+
         if(!validateRequiredFields()){
             alert('Please fill in all required fields');
             return;
@@ -90,7 +92,7 @@ export const Form: React.FC<UserData> = ({
             return;
         }
 
-        e.preventDefault();
+        
         console.log(formState);
         
         
