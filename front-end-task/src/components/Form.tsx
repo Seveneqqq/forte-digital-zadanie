@@ -233,7 +233,7 @@ export const Form: React.FC<UserData> = ({
         </div>
 
         <div className="flex flex-col md:flex-row md:gap-4 gap-10 w-full">
-           <div className="flex flex-col items-start w-full">
+           <div className="flex flex-col items-start w-full gap-2">
                <label className="block text-sm font-bold text-gray-700">Work start *</label>
                <div className="w-full flex">
                    <input
@@ -264,7 +264,7 @@ export const Form: React.FC<UserData> = ({
                    <span className="text-[#A3270C] text-sm">{errors.workStart}</span>
                )}
            </div>
-           <div className="flex flex-col items-start w-full">
+           <div className="flex flex-col items-start w-full gap-2">
                <label className="block text-sm font-bold text-gray-700">Work end *</label>
                <div className="w-full flex">
                    <input
